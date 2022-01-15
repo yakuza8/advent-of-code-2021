@@ -17,8 +17,7 @@ class Tests(unittest.TestCase):
         return [int(_) for _ in measurement_text.split()]
 
     def test_sample_input(self):
-        measurements = self._read_input(
-            """
+        measurements = self._read_input('''
         199
         200
         208
@@ -29,15 +28,11 @@ class Tests(unittest.TestCase):
         269
         260
         263
-        """
-        )
-        self.assertEqual(
-            7, Solution.count_increase_in_measurements(measurements=measurements)
-        )
+        ''')
+        self.assertEqual(7, Solution.count_increase_in_measurements(measurements=measurements))
 
     def test_real_problem(self):
-        measurements = self._read_input(
-            """
+        measurements = self._read_input('''
         187
         195
         199
@@ -2038,6 +2033,5 @@ class Tests(unittest.TestCase):
         9737
         9752
         9745
-        """
-        )
+        ''')
         print(Solution.count_increase_in_measurements(measurements=measurements))

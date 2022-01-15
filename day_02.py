@@ -5,9 +5,9 @@ from typing import List, Tuple
 
 class Solution:
     class Direction(enum.Enum):
-        FORWARD = "forward"
-        UP = "up"
-        DOWN = "down"
+        FORWARD = 'forward'
+        UP = 'up'
+        DOWN = 'down'
 
     @staticmethod
     def dive(movements: List[Tuple[str, int]]):
@@ -25,22 +25,19 @@ class Solution:
 class Tests(unittest.TestCase):
     @staticmethod
     def _read_input(movements):
-        return [(_.split()[0], int(_.split()[1])) for _ in movements.split("\n")]
+        return [(_.split()[0], int(_.split()[1])) for _ in movements.split('\n')]
 
     def test_sample_input(self):
-        movements = self._read_input(
-            """forward 5
+        movements = self._read_input('''forward 5
         down 5
         forward 8
         up 3
         down 8
-        forward 2"""
-        )
+        forward 2''')
         self.assertEqual(150, Solution.dive(movements=movements))
 
     def test_real_problem(self):
-        measurements = self._read_input(
-            """forward 2
+        measurements = self._read_input('''forward 2
         down 8
         down 1
         up 7
@@ -1039,6 +1036,5 @@ class Tests(unittest.TestCase):
         down 7
         up 1
         forward 3
-        forward 2"""
-        )
+        forward 2''')
         print(Solution.dive(movements=measurements))
