@@ -21,6 +21,19 @@ class Solution:
                 Y += amount
         return X * Y
 
+    @staticmethod
+    def dive_part_two(movements: List[Tuple[str, int]]):
+        X, Y, aim = 0, 0, 0
+        for direction, amount in movements:
+            if direction == Solution.Direction.FORWARD.value:
+                X += amount
+                Y += amount * aim
+            elif direction == Solution.Direction.UP.value:
+                aim -= amount
+            else:
+                aim += amount
+        return X * Y
+
 
 class Tests(unittest.TestCase):
     @staticmethod
@@ -35,6 +48,7 @@ class Tests(unittest.TestCase):
         down 8
         forward 2''')
         self.assertEqual(150, Solution.dive(movements=movements))
+        self.assertEqual(900, Solution.dive_part_two(movements=movements))
 
     def test_real_problem(self):
         measurements = self._read_input('''forward 2
@@ -1038,3 +1052,4 @@ class Tests(unittest.TestCase):
         forward 3
         forward 2''')
         print(Solution.dive(movements=measurements))
+        print(Solution.dive_part_two(movements=measurements))
