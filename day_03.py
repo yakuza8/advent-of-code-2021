@@ -23,6 +23,14 @@ class Rate:
     def least_common_bit(self):
         return 1 if self.most_common_bit == 0 else 0
 
+    @property
+    def most_common_bit_with_1_priority(self):
+        return 1 if self.ones >= self.zeros else 0
+
+    @property
+    def least_common_bit_with_0_priority(self):
+        return 0 if self.ones >= self.zeros else 1
+
 
 class Solution:
 
@@ -45,6 +53,32 @@ class Solution:
         gamma_rate = Solution._convert_list_to_binary(gamma_rate_list)
         epsilon_rate = Solution._convert_list_to_binary(epsilon_rate_list)
         return gamma_rate * epsilon_rate
+
+    @staticmethod
+    def binary_diagnostic_part_two(diagnostic_report: List[str]) -> int:
+        oxygen_generator_rating = Solution.decide_rating_by_filtering(diagnostic_report[:], True)
+        co2_scrubber_rating = Solution.decide_rating_by_filtering(diagnostic_report[:], False)
+        return oxygen_generator_rating * co2_scrubber_rating
+
+    @staticmethod
+    def decide_rating_by_filtering(ratings: List[str], keep_most_common: bool):
+        characteristic_length, current_index = len(ratings[0]), 0
+        while len(ratings) > 1 and current_index < characteristic_length:
+            current_rating = Rate()
+            for characteristic in ratings:
+                value = characteristic[current_index]
+                if value == '0':
+                    current_rating.increment_zero()
+                else:
+                    current_rating.increment_one()
+
+            filter_value = str(
+                current_rating.most_common_bit_with_1_priority if keep_most_common else
+                current_rating.least_common_bit_with_0_priority)
+            ratings = [_ for _ in ratings if _[current_index] == filter_value]
+            current_index += 1
+
+        return int(ratings[0], 2)
 
     @staticmethod
     def _convert_list_to_binary(binary_list) -> int:
@@ -70,6 +104,7 @@ class Tests(unittest.TestCase):
         00010
         01010''')
         self.assertEqual(198, Solution.binary_diagnostic(diagnostic_report=report))
+        self.assertEqual(230, Solution.binary_diagnostic_part_two(diagnostic_report=report))
 
     def test_real_problem(self):
         report = self._read_input('''010001110001
@@ -1073,3 +1108,4 @@ class Tests(unittest.TestCase):
         101000011000
         011100110101''')
         print(Solution.binary_diagnostic(diagnostic_report=report))
+        print(Solution.binary_diagnostic_part_two(diagnostic_report=report))
