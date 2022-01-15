@@ -10,6 +10,13 @@ class Solution:
             result += 1 if measurements[i] < measurements[i + 1] else 0
         return result
 
+    @staticmethod
+    def count_increase_in_measurements_part_two(measurements: List[int]):
+        result = 0
+        for i in range(len(measurements) - 3):
+            result += 1 if measurements[i] < measurements[i + 3] else 0
+        return result
+
 
 class Tests(unittest.TestCase):
     @staticmethod
@@ -30,6 +37,8 @@ class Tests(unittest.TestCase):
         263
         ''')
         self.assertEqual(7, Solution.count_increase_in_measurements(measurements=measurements))
+        self.assertEqual(5, Solution.count_increase_in_measurements_part_two(
+            measurements=measurements))
 
     def test_real_problem(self):
         measurements = self._read_input('''
@@ -2035,3 +2044,4 @@ class Tests(unittest.TestCase):
         9745
         ''')
         print(Solution.count_increase_in_measurements(measurements=measurements))
+        print(Solution.count_increase_in_measurements_part_two(measurements=measurements))
