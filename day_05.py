@@ -78,16 +78,16 @@ class Solution:
 class Tests(unittest.TestCase):
     @staticmethod
     def _read_input(lines):
-        lines = lines.replace("\t", "").replace(" ", "").split("\n")
+        lines = lines.replace('\t', '').replace(' ', '').split('\n')
         result = []
         for line in lines:
-            start, end = line.split("->")
-            result.append(Line(start=Point(X=int(start.split(",")[0]), Y=int(start.split(",")[1])),
-                               end=Point(X=int(end.split(",")[0]), Y=int(end.split(",")[1])), ))
+            start, end = line.split('->')
+            result.append(Line(start=Point(X=int(start.split(',')[0]), Y=int(start.split(',')[1])),
+                               end=Point(X=int(end.split(',')[0]), Y=int(end.split(',')[1])), ))
         return result
 
     def test_sample_input(self):
-        lines = self._read_input("""0,9 -> 5,9
+        lines = self._read_input('''0,9 -> 5,9
         8,0 -> 0,8
         9,4 -> 3,4
         2,2 -> 2,1
@@ -96,12 +96,12 @@ class Tests(unittest.TestCase):
         0,9 -> 2,9
         3,4 -> 1,4
         0,0 -> 8,8
-        5,5 -> 8,2""")
+        5,5 -> 8,2''')
         self.assertEqual(5, Solution.hydrothermal_vents(lines=lines))
         self.assertEqual(12, Solution.hydrothermal_vents_part_two(lines=lines))
 
     def test_real_problem(self):
-        lines = self._read_input("""561,579 -> 965,175
+        lines = self._read_input('''561,579 -> 965,175
         735,73 -> 316,73
         981,566 -> 981,11
         631,588 -> 631,910
@@ -600,6 +600,6 @@ class Tests(unittest.TestCase):
         970,916 -> 100,46
         672,152 -> 672,842
         468,825 -> 468,911
-        673,731 -> 267,325""")
+        673,731 -> 267,325''')
         print(Solution.hydrothermal_vents(lines=lines))
         print(Solution.hydrothermal_vents_part_two(lines=lines))
