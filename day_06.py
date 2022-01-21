@@ -38,7 +38,7 @@ class Solution:
 
     @staticmethod
     def lanternfish_part_two(fish: List[int], days: int):
-        ...
+        return Solution.lanternfish(fish=fish, days=days)
 
 
 class Tests(unittest.TestCase):
@@ -50,6 +50,7 @@ class Tests(unittest.TestCase):
         fish_list = self._read_input('3,4,3,1,2')
         self.assertEqual(26, Solution.lanternfish(fish=fish_list, days=18))
         self.assertEqual(5934, Solution.lanternfish(fish=fish_list, days=80))
+        self.assertEqual(26984457539, Solution.lanternfish_part_two(fish=fish_list, days=256))
 
     def test_real_problem(self):
         fish_list = self._read_input(
@@ -62,3 +63,4 @@ class Tests(unittest.TestCase):
             '2,5,3,4,2,1,3,2,5,3,2,2,3,5,2,1,4,5,4,4,5,5,3,3,5,4,5,5,4,3,5,3,5,3,1,3,2,2,1,4,4,5,'
             '2,2,4,2,1,4')
         print(Solution.lanternfish(fish=fish_list, days=80))
+        print(Solution.lanternfish_part_two(fish=fish_list, days=256))
