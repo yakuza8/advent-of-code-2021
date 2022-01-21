@@ -17,7 +17,7 @@ class Line:
 
 def ranger(start: int, end: int):
     if start > end:
-        start, end = end, start
+        yield from range(start, end - 1, -1)
     yield from range(start, end + 1)
 
 
@@ -28,9 +28,11 @@ class Solution:
         geographic_map = [[0 for _ in range(X)] for _ in range(Y)]
         for line in lines:
             start, end = line.start, line.end
+            # Vertical
             if start.X == end.X:
                 for y in ranger(start.Y, end.Y):
                     geographic_map[y][start.X] += 1
+            # Horizontal
             elif start.Y == end.Y:
                 for x in ranger(start.X, end.X):
                     geographic_map[start.Y][x] += 1
@@ -39,7 +41,24 @@ class Solution:
 
     @staticmethod
     def hydrothermal_vents_part_two(lines: List[Line]):
-        ...
+        Y, X = Solution.get_dimensions(lines=lines)
+        geographic_map = [[0 for _ in range(X)] for _ in range(Y)]
+        for line in lines:
+            start, end = line.start, line.end
+            # Vertical
+            if start.X == end.X:
+                for y in ranger(start.Y, end.Y):
+                    geographic_map[y][start.X] += 1
+            # Horizontal
+            elif start.Y == end.Y:
+                for x in ranger(start.X, end.X):
+                    geographic_map[start.Y][x] += 1
+            # Diagonal
+            elif abs(start.X - end.X) == abs(start.Y - end.Y):
+                for x, y in zip(ranger(start.X, end.X), ranger(start.Y, end.Y)):
+                    geographic_map[y][x] += 1
+        merged_map = [value for row in geographic_map for value in row]
+        return sum(1 for value in merged_map if value > 1)
 
     @staticmethod
     def get_dimensions(lines: List[Line]):
@@ -79,6 +98,7 @@ class Tests(unittest.TestCase):
         0,0 -> 8,8
         5,5 -> 8,2""")
         self.assertEqual(5, Solution.hydrothermal_vents(lines=lines))
+        self.assertEqual(12, Solution.hydrothermal_vents_part_two(lines=lines))
 
     def test_real_problem(self):
         lines = self._read_input("""561,579 -> 965,175
@@ -582,3 +602,4 @@ class Tests(unittest.TestCase):
         468,825 -> 468,911
         673,731 -> 267,325""")
         print(Solution.hydrothermal_vents(lines=lines))
+        print(Solution.hydrothermal_vents_part_two(lines=lines))
