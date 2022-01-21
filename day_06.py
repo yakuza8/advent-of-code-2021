@@ -40,8 +40,6 @@ class Solution:
 
         .. math:: \sum _{day=1}^{days} \left \lceil \frac{\mathbf{maximum \: date \: limit} - day}{7} \right \rceil
         """
-
-
         from collections import defaultdict
 
         first_birth_mapping = defaultdict(int)
