@@ -26,6 +26,22 @@ class LanternFish:
 class Solution:
     @staticmethod
     def lanternfish_fast(fish: List[int], days: int):
+        """
+        Math beats the simulation in real life and algorithmic complexity for this problem
+
+        Instead of simulating the real problem, we need to make it faster so that we can skip the
+        simulation for each exponentially produced fish habitat.
+
+        The formulation depends on the going over each each on separate day and pre-calculate and
+        embed how much fish they will produce and add those newborn fish into a mapping when they
+        will be available to produce their own first fish
+
+        In math, we can formulate each day step as the following
+
+        .. math:: \sum _{day=1}^{days} \left \lceil \frac{\mathbf{maximum \: date \: limit} - day}{7} \right \rceil
+        """
+
+
         from collections import defaultdict
 
         first_birth_mapping = defaultdict(int)
