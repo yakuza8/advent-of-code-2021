@@ -15,8 +15,18 @@ class Solution:
         return min(results.values())
 
     @staticmethod
-    def calculate_fuel_to_align_part_two(measurements: List[int]):
-        ...
+    def calculate_fuel_to_align_part_two(crabs: List[int]):
+        from math import ceil, floor
+        average_position = float(sum(crabs)) / len(crabs)
+        floor_position, ceil_position = int(floor(average_position)), int(ceil(average_position))
+
+        return min(sum(Solution.cost_function(_, floor_position) for _ in crabs),
+                   sum(Solution.cost_function(_, ceil_position) for _ in crabs))
+
+    @staticmethod
+    def cost_function(position: int, alignment_point: int) -> float:
+        difference = abs(position - alignment_point)
+        return float(difference * (difference + 1)) / 2
 
 
 class Tests(unittest.TestCase):
@@ -27,6 +37,7 @@ class Tests(unittest.TestCase):
     def test_sample_input(self):
         crabs = self._read_input('16,1,2,0,4,2,7,1,2,14')
         self.assertEqual(37, Solution.calculate_fuel_to_align(crabs=crabs))
+        self.assertEqual(168, Solution.calculate_fuel_to_align_part_two(crabs=crabs))
 
     def test_real_problem(self):
         crabs = self._read_input(
@@ -78,3 +89,4 @@ class Tests(unittest.TestCase):
             '73,12,867,1477,70,147,317,999,1377,196,342,127,787,372,687,855,5,1663,49,552,380,95,'
             '469,132,58,397,213,194,35,1353,216,12,497,610,571,802,392,42,490,778,6,483,1451')
         print(Solution.calculate_fuel_to_align(crabs=crabs))
+        print(Solution.calculate_fuel_to_align_part_two(crabs=crabs))
